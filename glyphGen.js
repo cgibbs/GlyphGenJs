@@ -95,11 +95,11 @@ function branchesToLines(node) {
 				let y = getRandomInt(SCREEN_HEIGHT / 4, SCREEN_HEIGHT * 3 / 4)
 				y = y - y % 20;
 				let new_node = newNode45(end);
-				objects.push(new Line(node.pos, end, 3));
+				objects.push(new Line(node.pos, end, getRandomInt(2, 5)));
 	        	frontier.push(new_node);
 			} else {
 			    let new_node = newNode45(end);
-		        objects.push(new Line(node.pos, end, 3));
+		        objects.push(new Line(node.pos, end, getRandomInt(2, 5)));
 		        frontier.push(new_node);
 	    	}
 	    } else {
