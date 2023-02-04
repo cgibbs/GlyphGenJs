@@ -1,6 +1,13 @@
 SCREEN_WIDTH = 1000;
 SCREEN_HEIGHT = 750;
 
+// notes for future development:
+// better to define a few more complex shapes like "cross",
+// "lollipop", "nested square", "nested circle", etc. and 
+// compose glyphs from  those?
+// might also be better to use length ratios than purely
+// integers, at least for aesthetic purposes.
+
 class Line {
 	constructor(start, end, thick) {
 		this.start = start;
@@ -65,7 +72,7 @@ let objects = [];
 
 function branchesToLines(node) {
 	let ends = [];
-	let distance = getRandomInt(1,10) * 10;
+	let distance = getRandomInt(1,5) * 20;
 	if (node.branches.indexOf('n') > -1)
         ends.push([node.pos[0], node.pos[1] - distance]);
     if (node.branches.indexOf('e') > -1)
@@ -84,10 +91,10 @@ function branchesToLines(node) {
         ends.push([node.pos[0] - distance, node.pos[1] - distance]);
 
     ends.forEach((end) => {
-    	while (end[0] < 0) end[0] += 100;
-    	while (end[0] > SCREEN_WIDTH) end[0] -= 100;
-    	while (end[1] < 0) end[1] += 100;
-		while (end[1] > SCREEN_HEIGHT) end[1] -= 100;
+    	while (end[0] < 0) end[0] += 50;
+    	while (end[0] > SCREEN_WIDTH) end[0] -= 50;
+    	while (end[1] < 0) end[1] += 50;
+		while (end[1] > SCREEN_HEIGHT) end[1] -= 50;
 		if (getRandomInt(0,5) < 4) {
 			if (getRandomInt(0,4) === 3) { // weights toward center of the screen for picking nodes
 				let x = getRandomInt(SCREEN_WIDTH / 4, SCREEN_WIDTH * 3 / 4)
@@ -95,19 +102,19 @@ function branchesToLines(node) {
 				let y = getRandomInt(SCREEN_HEIGHT / 4, SCREEN_HEIGHT * 3 / 4)
 				y = y - y % 20;
 				let new_node = newNode45(end);
-				objects.push(new Line(node.pos, end, getRandomInt(2, 5)));
+				objects.push(new Line(node.pos, end, 2));
 	        	frontier.push(new_node);
 			} else {
 			    let new_node = newNode45(end);
-		        objects.push(new Line(node.pos, end, getRandomInt(2, 5)));
+		        objects.push(new Line(node.pos, end, 2));
 		        frontier.push(new_node);
 	    	}
 	    } else {
-	    	let rad = getRandomInt(1,3) * 15
+	    	let rad = getRandomInt(1,3) * 20
 	    	let new_node = newNode45(end);
-	        objects.push(new Circle(node.pos, rad, getRandomInt(0, 5)));
-	        new_poses = [[node.pos[0], node.pos[1] + rad], [node.pos[0], node.pos[1] - rad],
-                [node.pos[0] + rad, node.pos[1]], [node.pos[0] - rad, node.pos[1]]];
+	        objects.push(new Circle(node.pos, rad, 3));
+	        new_poses = [[node.pos[0], node.pos[1] + rad * 2], [node.pos[0], node.pos[1] - rad * 2],
+                [node.pos[0] + rad * 2, node.pos[1]], [node.pos[0] - rad * 2, node.pos[1]]];
             for (i = 0; i < new_poses.length; i++) {
             	frontier.push(newNode45(new_poses[i]));
             }
